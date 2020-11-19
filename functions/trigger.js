@@ -1,9 +1,12 @@
 exports.handler = async (event) => {
-  console.log(event);
+  // {"session_variables":{"x-hasura-role":"admin"},"input":{"numbers":[10,5]},"action":{"name":"add"}}
+  const body = JSON.parse(event.body);
+
+  const { [num1, num2] } = body.input;
 
   // TODO respond to Hasura
   return {
     statusCode: 200,
-    body: 'OK',
+    body: JSON.stringify({ sum: num1 + num2 }),
   };
 };
