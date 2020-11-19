@@ -1,16 +1,6 @@
-<h1>Hi Chat!</h1>
+const fetch = require('node-fetch');
 
-<ul>
-  {% for user in users %}
-
-  <li>
-    {{user.id}}: {{user.name}} {{user.githubUsername}} {{user.lwjEpisode}}
-  </li>
-
-  {% endfor %}
-</ul>
-
-<script>
+module.exports = () => {
   async function getUsers() {
     const result = await fetch(
       'https://lwj-hasura-jamstack.hasura.app/v1/graphql',
@@ -24,8 +14,15 @@
             query MyQuery {
               users {
                 id
-                name
                 githubUsername
+                name
+                lwjEpisode {
+                  title
+                  guest {
+                    name
+                    twitter
+                  }
+                }
               }
             }
           `,
@@ -34,8 +31,8 @@
       }
     ).then((res) => res.json());
 
-    console.log({ result });
+    return result.data.users;
   }
 
-  // getUsers();
-</script>
+  return getUsers();
+};
