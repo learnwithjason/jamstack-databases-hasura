@@ -11,6 +11,8 @@
 </ul>
 
 <script>
+  // for client-side queries, you can use something like this
+  // (or Apollo or URQL for more advanced use cases)
   async function getUsers() {
     const result = await fetch(
       'https://lwj-hasura-jamstack.hasura.app/v1/graphql',
